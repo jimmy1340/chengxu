@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上线了 - 免费注册</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="container">
+        <div class="register-box">
+            <!-- 返回登录链接 -->
+            <div class="back-to-login">
+                <a href="index.html">← 返回登录</a>
+            </div>
+            
+            <!-- 品牌标识 -->
+            <div class="brand">
+                <h1>上线了</h1>
+                <p class="domain">SXL.CN</p>
+            </div>
+            
+            <!-- 标题 -->
+            <h2 class="register-title">免费注册账户</h2>
+            <p class="register-subtitle">创建您的专属账户，开启建站之旅</p>
+            
+            <!-- 注册表单 -->
+            <form class="register-form" id="registerForm">
+                <!-- 用户名 -->
+                <div class="input-group">
+                    <input type="text" class="form-input" id="username" placeholder="用户名" required>
+                    <span class="input-icon">👤</span>
+                </div>
+                
+                <!-- 手机号 -->
+                <div class="phone-input-group">
+                    <select class="country-code">
+                        <option value="+86">+86</option>
+                        <option value="+1">+1</option>
+                        <option value="+44">+44</option>
+                        <option value="+81">+81</option>
+                        <option value="+82">+82</option>
+                    </select>
+                    <input type="tel" class="phone-input" placeholder="请输入手机号" required>
+                    <span class="input-icon">📱</span>
+                </div>
+                
+                <!-- 邮箱 -->
+                <div class="input-group">
+                    <input type="email" class="form-input" id="email" placeholder="邮箱地址" required>
+                    <span class="input-icon">📧</span>
+                </div>
+                
+                <!-- 密码 -->
+                <div class="input-group">
+                    <input type="password" class="form-input" id="password" placeholder="设置密码（至少6位）" required>
+                    <span class="input-icon">🔒</span>
+                    <span class="password-toggle" onclick="togglePassword('password')">👁️</span>
+                </div>
+                
+                <!-- 确认密码 -->
+                <div class="input-group">
+                    <input type="password" class="form-input" id="confirmPassword" placeholder="确认密码" required>
+                    <span class="input-icon">🔒</span>
+                    <span class="password-toggle" onclick="togglePassword('confirmPassword')">👁️</span>
+                </div>
+                
+                <!-- 验证码 -->
+                <div class="captcha-group">
+                    <input type="text" class="captcha-input" placeholder="验证码" required>
+                    <div class="captcha-image" id="captchaImage">ABCD</div>
+                    <button type="button" class="refresh-captcha" onclick="refreshCaptcha()">🔄</button>
+                </div>
+                
+                <!-- 协议同意 -->
+                <div class="agreement-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="agreement" required>
+                        <span class="checkmark"></span>
+                        我已阅读并同意
+                        <a href="#" class="link">《用户协议》</a>
+                        和
+                        <a href="#" class="link">《隐私政策》</a>
+                    </label>
+                </div>
+                
+                <!-- 注册按钮 -->
+                <button type="submit" class="register-btn">立即注册</button>
+            </form>
+            
+            <!-- 已有账户 -->
+            <div class="login-link">
+                <span>已有账户？</span>
+                <a href="index.html">立即登录</a>
+            </div>
+            
+            <!-- 第三方注册 -->
+            <div class="third-party-register">
+                <div class="divider">
+                    <span>或使用第三方账号注册</span>
+                </div>
+                
+                <div class="social-buttons">
+                    <button class="social-btn wechat-btn">
+                        <span class="social-icon">💬</span>
+                        微信注册
+                    </button>
+                    <button class="social-btn qq-btn">
+                        <span class="social-icon">🐧</span>
+                        QQ注册
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="register.js"></script>
+</body>
+</html>

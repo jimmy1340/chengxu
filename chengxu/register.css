@@ -1,0 +1,423 @@
+/* 注册页面专用样式 */
+
+/* 注册盒子样式 */
+.register-box {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+/* 返回登录链接 */
+.back-to-login {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.back-to-login a {
+    color: #667eea;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.back-to-login a:hover {
+    color: #5a6fd8;
+    text-decoration: underline;
+}
+
+/* 注册标题 */
+.register-title {
+    font-size: 24px;
+    color: #333;
+    margin: 20px 0 10px;
+    font-weight: 600;
+}
+
+.register-subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+/* 表单样式 */
+.register-form {
+    margin-bottom: 20px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 15px 40px 15px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* 输入框图标 */
+.input-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #999;
+    pointer-events: none;
+}
+
+/* 密码显示/隐藏按钮 */
+.password-toggle {
+    position: absolute;
+    right: 45px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+    color: #667eea;
+}
+
+/* 手机号输入组 */
+.phone-input-group {
+    display: flex;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+    position: relative;
+}
+
+.phone-input-group .country-code {
+    border: none;
+    padding: 15px 10px;
+    background: #f8f8f8;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    min-width: 80px;
+}
+
+.phone-input-group .phone-input {
+    flex: 1;
+    border: none;
+    padding: 15px 40px 15px 15px;
+    font-size: 16px;
+    outline: none;
+}
+
+.phone-input-group:focus-within {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.phone-input-group .input-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* 验证码组 */
+.captcha-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.captcha-input {
+    flex: 1;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.captcha-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.captcha-image {
+    background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    letter-spacing: 2px;
+    user-select: none;
+    min-width: 80px;
+    text-align: center;
+}
+
+.refresh-captcha {
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    min-width: 50px;
+}
+
+.refresh-captcha:hover {
+    background: #5a6fd8;
+}
+
+/* 协议同意 */
+.agreement-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    line-height: 1.5;
+}
+
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ddd;
+    border-radius: 3px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.3s ease;
+    margin-top: 1px;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark {
+    background: #667eea;
+    border-color: #667eea;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+    content: "✓";
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.checkbox-label .link {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.checkbox-label .link:hover {
+    text-decoration: underline;
+}
+
+/* 注册按钮 */
+.register-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.register-btn:hover {
+    background: linear-gradient(45deg, #5a6fd8, #6a4190);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.register-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 登录链接 */
+.login-link {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.login-link a {
+    color: #667eea;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* 第三方注册 */
+.third-party-register {
+    margin-top: 20px;
+}
+
+.divider {
+    position: relative;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #eee;
+}
+
+.divider span {
+    background: white;
+    padding: 0 15px;
+    font-size: 12px;
+    color: #999;
+}
+
+.social-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.social-btn {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.social-btn:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+}
+
+.wechat-btn:hover {
+    background: rgba(7, 193, 96, 0.1);
+    border-color: #07c160;
+    color: #07c160;
+}
+
+.qq-btn:hover {
+    background: rgba(18, 183, 245, 0.1);
+    border-color: #12b7f5;
+    color: #12b7f5;
+}
+
+.social-icon {
+    font-size: 16px;
+}
+
+/* 错误信息样式 */
+.error-message {
+    color: #ff4757;
+    font-size: 12px;
+    margin-top: 5px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.error-message::before {
+    content: "⚠️";
+    font-size: 12px;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+    .register-box {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .register-title {
+        font-size: 20px;
+    }
+    
+    .captcha-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .captcha-image {
+        width: 100%;
+    }
+    
+    .social-buttons {
+        flex-direction: column;
+    }
+}
+
+/* 成功动画 */
+.success-animation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px 40px;
+    border-radius: 10px;
+    font-size: 16px;
+    z-index: 1000;
+    animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    10%, 90% { opacity: 1; }
+}
