@@ -172,10 +172,10 @@ document.querySelector('.wechat-login').addEventListener('click', () => {
     alert('第三方登录功能开发中...');
 });
 
-// 免费注册
+// 免费注册 - 直接跳转到注册页面
 document.querySelector('.register-link a').addEventListener('click', (e) => {
-    e.preventDefault();
-    alert('注册功能开发中...');
+    // 让链接正常跳转，不需要阻止默认行为
+    console.log('正在跳转到注册页面...');
 });
 
 // 页面加载完成后的初始化

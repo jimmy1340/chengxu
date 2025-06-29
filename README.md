@@ -14,6 +14,9 @@
 - 📱 响应式布局，支持手机和桌面端
 - ✅ 完整的表单验证（手机号、邮箱、密码）
 - 🔄 手机号/邮箱登录方式切换
+- 📝 **完整的用户注册页面**
+- 🔐 密码强度实时检测
+- 🖼️ 图形验证码功能
 - ⚡ 平滑的动画效果和交互体验
 - 🌐 本地开发服务器支持
 
@@ -49,9 +52,12 @@ open index.html  # macOS
 #### 文件说明
 ```
 chengxu/
-├── index.html      # 主页面
-├── style.css       # 样式文件
-├── script.js       # 交互逻辑
+├── index.html      # 登录页面
+├── register.html   # 注册页面
+├── style.css       # 公共样式文件
+├── register.css    # 注册页面样式
+├── script.js       # 登录页面逻辑
+├── register.js     # 注册页面逻辑
 ├── start.py        # Python启动脚本
 ├── start.sh        # Shell启动脚本
 └── README.md       # 详细说明文档
