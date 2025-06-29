@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上线了 - 登录</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <!-- 品牌标识 -->
+            <div class="brand">
+                <h1>上线了</h1>
+                <p class="domain">SXL.CN</p>
+            </div>
+            
+            <!-- 平台选择 -->
+            <div class="platform-tabs">
+                <button class="tab active">手机</button>
+                <button class="tab">邮箱</button>
+            </div>
+            
+            <!-- 提示文字 -->
+            <p class="login-tip">你必须先登录才能管理此网站。</p>
+            
+            <!-- 登录表单 -->
+            <form class="login-form" id="loginForm">
+                <div class="phone-input-group">
+                    <select class="country-code">
+                        <option value="+86">+86</option>
+                        <option value="+1">+1</option>
+                        <option value="+44">+44</option>
+                    </select>
+                    <input type="tel" class="phone-input" placeholder="请输入手机号" required>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" class="password-input" placeholder="密码" required>
+                </div>
+                
+                <button type="submit" class="login-btn">登录</button>
+            </form>
+            
+            <!-- 辅助链接 -->
+            <div class="helper-links">
+                <a href="#" class="sms-login">使用短信验证码登录</a>
+                <a href="#" class="forgot-password">忘记密码？</a>
+            </div>
+            
+            <!-- 第三方登录 -->
+            <div class="third-party">
+                <button class="wechat-login">
+                    或使用第三方账号登录 🎯
+                </button>
+            </div>
+            
+            <!-- 注册链接 -->
+            <div class="register-link">
+                <span>没有账户？</span>
+                <a href="#">免费注册</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
