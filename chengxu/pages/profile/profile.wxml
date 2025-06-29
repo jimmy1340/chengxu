@@ -1,0 +1,179 @@
+<!--pages/profile/profile.wxml-->
+<view class="page-container">
+  <!-- 用户信息头部 -->
+  <view class="user-header luxury-card margin-medium">
+    <view class="user-info" wx:if="{{userInfo}}">
+      <image class="user-avatar avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" />
+      <view class="user-details">
+        <text class="user-name">{{userInfo.nickName || '尊贵的客户'}}</text>
+        <view class="user-status">
+          <text class="vip-badge {{isVIP ? 'vip-active' : 'vip-inactive'}}">
+            {{isVIP ? 'VIP会员' : '普通会员'}}
+          </text>
+        </view>
+      </view>
+      <view class="user-actions">
+        <button class="edit-profile-btn btn-secondary" bindtap="editProfile">编辑</button>
+      </view>
+    </view>
+    
+    <view class="login-prompt" wx:else>
+      <image class="login-icon" src="/images/login-icon.png" />
+      <text class="login-text">登录享受专属服务</text>
+      <button class="login-btn btn-primary" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">立即登录</button>
+    </view>
+  </view>
+
+  <!-- VIP特权 -->
+  <view class="vip-privileges luxury-card margin-medium" wx:if="{{isVIP}}">
+    <text class="section-title accent-text">VIP特权</text>
+    <view class="privileges-grid">
+      <view class="privilege-item" wx:for="{{vipPrivileges}}" wx:key="title">
+        <image class="privilege-icon" src="{{item.icon}}" />
+        <text class="privilege-title">{{item.title}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- VIP申请 -->
+  <view class="vip-application luxury-card margin-medium" wx:if="{{!isVIP && userInfo}}">
+    <view class="vip-promo">
+      <image class="vip-crown" src="/images/vip-crown.png" />
+      <view class="vip-content">
+        <text class="vip-title">成为VIP会员</text>
+        <text class="vip-description">享受专属购买权限、优先客服、生日特惠等尊贵服务</text>
+        <button class="vip-apply-btn btn-primary" bindtap="applyVIP">立即申请</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的订单 -->
+  <view class="my-orders luxury-card margin-medium" wx:if="{{userInfo}}">
+    <view class="orders-header flex-between">
+      <text class="section-title">我的订单</text>
+      <text class="view-all accent-text" bindtap="viewAllOrders">查看全部</text>
+    </view>
+    
+    <view class="order-tabs">
+      <view class="order-tab {{currentTab === 'all' ? 'active' : ''}}" bindtap="switchTab" data-tab="all">
+        全部
+      </view>
+      <view class="order-tab {{currentTab === 'pending' ? 'active' : ''}}" bindtap="switchTab" data-tab="pending">
+        待支付
+      </view>
+      <view class="order-tab {{currentTab === 'paid' ? 'active' : ''}}" bindtap="switchTab" data-tab="paid">
+        已支付
+      </view>
+      <view class="order-tab {{currentTab === 'delivered' ? 'active' : ''}}" bindtap="switchTab" data-tab="delivered">
+        已发货
+      </view>
+    </view>
+    
+    <view class="orders-list">
+      <view class="order-item" wx:for="{{displayOrders}}" wx:key="orderNumber" bindtap="viewOrderDetail" data-order="{{item}}">
+        <view class="order-header">
+          <text class="order-number">{{item.orderNumber}}</text>
+          <text class="order-status {{item.status}}">{{orderStatusMap[item.status]}}</text>
+        </view>
+        
+        <view class="order-product">
+          <image class="order-product-image" src="{{item.product.image}}" mode="aspectFill" />
+          <view class="order-product-info">
+            <text class="order-product-name">{{item.product.name}}</text>
+            <text class="order-product-specs muted-text">数量: {{item.quantity}}</text>
+            <text class="order-product-price price">¥{{item.totalAmount}}</text>
+          </view>
+        </view>
+        
+        <view class="order-actions">
+          <button class="order-action-btn btn-secondary" wx:if="{{item.status === 'pending'}}" bindtap="payOrder" data-order="{{item}}" catchtap="true">立即支付</button>
+          <button class="order-action-btn btn-secondary" wx:if="{{item.status === 'paid'}}" bindtap="cancelOrder" data-order="{{item}}" catchtap="true">申请退款</button>
+        </view>
+      </view>
+      
+      <view class="empty-orders" wx:if="{{displayOrders.length === 0}}">
+        <image class="empty-icon" src="/images/empty-orders.png" />
+        <text class="empty-text">暂无相关订单</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的收藏 -->
+  <view class="my-favorites luxury-card margin-medium" wx:if="{{userInfo}}">
+    <view class="favorites-header flex-between">
+      <text class="section-title">我的收藏</text>
+      <text class="view-all accent-text" bindtap="viewAllFavorites">查看全部</text>
+    </view>
+    
+    <scroll-view class="favorites-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view class="favorites-list">
+        <view class="favorite-item" wx:for="{{favoriteProducts}}" wx:key="id" bindtap="goToProduct" data-id="{{item.id}}">
+          <image class="favorite-image" src="{{item.image}}" mode="aspectFill" />
+          <text class="favorite-name">{{item.name}}</text>
+          <text class="favorite-price price">¥{{item.price}}</text>
+        </view>
+        
+        <view class="empty-favorites" wx:if="{{favoriteProducts.length === 0}}">
+          <image class="empty-icon" src="/images/empty-favorites.png" />
+          <text class="empty-text">暂无收藏商品</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 服务中心 -->
+  <view class="service-center luxury-card margin-medium">
+    <text class="section-title">服务中心</text>
+    
+    <view class="service-grid">
+      <view class="service-item" wx:for="{{serviceItems}}" wx:key="title" bindtap="handleServiceClick" data-action="{{item.action}}">
+        <image class="service-icon" src="{{item.icon}}" />
+        <text class="service-title">{{item.title}}</text>
+        <text class="service-arrow">></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 设置选项 -->
+  <view class="settings luxury-card margin-medium">
+    <text class="section-title">设置</text>
+    
+    <view class="settings-list">
+      <view class="setting-item" wx:for="{{settingItems}}" wx:key="title" bindtap="handleSettingClick" data-action="{{item.action}}">
+        <image class="setting-icon" src="{{item.icon}}" />
+        <text class="setting-title">{{item.title}}</text>
+        <view class="setting-value">
+          <text class="setting-text" wx:if="{{item.value}}">{{item.value}}</text>
+          <switch wx:if="{{item.type === 'switch'}}" checked="{{item.checked}}" bindchange="onSettingToggle" data-key="{{item.key}}" />
+          <text class="setting-arrow">></text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 关于我们 -->
+  <view class="about-section luxury-card margin-medium">
+    <text class="section-title">关于DIOR</text>
+    
+    <view class="about-content">
+      <text class="about-text">
+        DIOR始终坚持为客户提供最优质的产品和服务。如您在使用过程中遇到任何问题，请随时联系我们的客服团队。
+      </text>
+      
+      <view class="contact-info">
+        <view class="contact-item">
+          <text class="contact-label">客服热线:</text>
+          <text class="contact-value accent-text">400-820-8788</text>
+        </view>
+        <view class="contact-item">
+          <text class="contact-label">服务时间:</text>
+          <text class="contact-value">09:00-21:00</text>
+        </view>
+      </view>
+      
+      <view class="app-version">
+        <text class="version-text">版本号: {{appVersion}}</text>
+      </view>
+    </view>
+  </view>
+</view>

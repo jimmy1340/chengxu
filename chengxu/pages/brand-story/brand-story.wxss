@@ -1,0 +1,546 @@
+/* pages/brand-story/brand-story.wxss */
+
+/* 品牌视频 */
+.brand-video-section {
+  position: relative;
+  height: 500rpx;
+  margin-bottom: 40rpx;
+}
+
+.brand-video {
+  width: 100%;
+  height: 100%;
+}
+
+.video-overlay {
+  position: absolute;
+  bottom: 40rpx;
+  left: 40rpx;
+  right: 40rpx;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
+  padding: 40rpx;
+  border-radius: 20rpx;
+}
+
+.video-title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-bottom: 15rpx;
+  letter-spacing: 3rpx;
+}
+
+.video-subtitle {
+  font-size: 28rpx;
+  color: #D4AF37;
+  letter-spacing: 2rpx;
+}
+
+/* 品牌历程 */
+.brand-timeline {
+  padding: 40rpx;
+}
+
+.timeline-container {
+  margin-top: 40rpx;
+}
+
+.timeline-item {
+  display: flex;
+  margin-bottom: 60rpx;
+  opacity: 0;
+  transform: translateY(30rpx);
+  transition: all 0.6s ease;
+}
+
+.timeline-item.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-marker {
+  position: relative;
+  margin-right: 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timeline-dot {
+  width: 20rpx;
+  height: 20rpx;
+  background: linear-gradient(135deg, #D4AF37, #F4E4A6);
+  border-radius: 50%;
+  border: 4rpx solid rgba(212, 175, 55, 0.3);
+  z-index: 1;
+}
+
+.timeline-line {
+  width: 2rpx;
+  height: 100rpx;
+  background: linear-gradient(180deg, #D4AF37, rgba(212, 175, 55, 0.3));
+  margin-top: 20rpx;
+}
+
+.timeline-content {
+  flex: 1;
+  padding-top: 10rpx;
+}
+
+.timeline-year {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+}
+
+.timeline-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-bottom: 20rpx;
+}
+
+.timeline-description {
+  display: block;
+  font-size: 26rpx;
+  color: #CCCCCC;
+  line-height: 1.6;
+  margin-bottom: 25rpx;
+}
+
+.timeline-image {
+  width: 100%;
+  border-radius: 15rpx;
+  margin-top: 20rpx;
+}
+
+/* 品牌精神 */
+.brand-spirit {
+  padding: 40rpx;
+}
+
+.spirit-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30rpx;
+  margin-top: 40rpx;
+}
+
+.spirit-item {
+  flex: 1;
+  min-width: 300rpx;
+  text-align: center;
+  padding: 40rpx 30rpx;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20rpx;
+  border: 1rpx solid rgba(212, 175, 55, 0.1);
+  transition: all 0.3s ease;
+}
+
+.spirit-item.slide-up {
+  animation: slideUpFade 0.8s ease forwards;
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(50rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.spirit-icon {
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 25rpx;
+}
+
+.spirit-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #D4AF37;
+  margin-bottom: 20rpx;
+}
+
+.spirit-description {
+  font-size: 26rpx;
+  color: #CCCCCC;
+  line-height: 1.5;
+}
+
+/* 标志性产品 */
+.iconic-products {
+  padding: 40rpx;
+}
+
+.products-scroll {
+  margin-top: 30rpx;
+}
+
+.products-list {
+  display: flex;
+  gap: 30rpx;
+  padding: 0 20rpx;
+}
+
+.product-item {
+  position: relative;
+  width: 280rpx;
+  height: 350rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.product-item:active {
+  transform: scale(0.95);
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+}
+
+.product-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
+  padding: 30rpx;
+}
+
+.product-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-bottom: 10rpx;
+}
+
+.product-year {
+  font-size: 24rpx;
+  color: #D4AF37;
+}
+
+/* 工艺传承 */
+.craftsmanship {
+  padding: 40rpx;
+}
+
+.craft-content {
+  margin-top: 30rpx;
+}
+
+.craft-hero-image {
+  width: 100%;
+  border-radius: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.craft-description {
+  font-size: 28rpx;
+  color: #CCCCCC;
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+}
+
+.craft-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 25rpx;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 15rpx;
+  border: 1rpx solid rgba(212, 175, 55, 0.1);
+}
+
+.highlight-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 25rpx;
+}
+
+.highlight-content {
+  flex: 1;
+}
+
+.highlight-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-bottom: 10rpx;
+}
+
+.highlight-description {
+  font-size: 24rpx;
+  color: #CCCCCC;
+  line-height: 1.4;
+}
+
+/* 设计师故事 */
+.designer-story {
+  padding: 40rpx;
+}
+
+.designer-list {
+  margin-top: 30rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 40rpx;
+}
+
+.designer-item {
+  display: flex;
+  gap: 30rpx;
+  padding: 30rpx;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20rpx;
+  border: 1rpx solid rgba(212, 175, 55, 0.1);
+}
+
+.designer-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 3rpx solid #D4AF37;
+}
+
+.designer-info {
+  flex: 1;
+}
+
+.designer-name {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-bottom: 8rpx;
+}
+
+.designer-period {
+  display: block;
+  font-size: 24rpx;
+  margin-bottom: 15rpx;
+}
+
+.designer-achievement {
+  display: block;
+  font-size: 26rpx;
+  color: #D4AF37;
+  margin-bottom: 20rpx;
+  font-weight: bold;
+}
+
+.designer-quote {
+  font-size: 26rpx;
+  color: #CCCCCC;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* 品牌统计 */
+.brand-statistics {
+  padding: 40rpx;
+}
+
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30rpx;
+  margin-top: 30rpx;
+}
+
+.stat-item {
+  flex: 1;
+  min-width: 150rpx;
+  text-align: center;
+  padding: 30rpx 20rpx;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 15rpx;
+  border: 1rpx solid rgba(212, 175, 55, 0.1);
+}
+
+.stat-number {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #CCCCCC;
+}
+
+/* 全球影响力 */
+.global-impact {
+  padding: 40rpx;
+}
+
+.impact-content {
+  margin-top: 30rpx;
+}
+
+.world-map {
+  width: 100%;
+  border-radius: 15rpx;
+  margin-bottom: 30rpx;
+}
+
+.impact-text {
+  font-size: 26rpx;
+  color: #CCCCCC;
+  line-height: 1.6;
+  margin-bottom: 30rpx;
+}
+
+.presence-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.presence-item {
+  flex: 1;
+  min-width: 120rpx;
+  text-align: center;
+  padding: 25rpx 15rpx;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 12rpx;
+  border: 1rpx solid rgba(212, 175, 55, 0.2);
+}
+
+.presence-number {
+  display: block;
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #D4AF37;
+  margin-bottom: 8rpx;
+}
+
+.presence-label {
+  font-size: 22rpx;
+  color: #CCCCCC;
+}
+
+/* 可持续发展 */
+.sustainability {
+  padding: 40rpx;
+}
+
+.sustainability-content {
+  margin-top: 30rpx;
+}
+
+.sustainability-intro {
+  margin-bottom: 40rpx;
+}
+
+.sustainability-text {
+  font-size: 26rpx;
+  color: #CCCCCC;
+  line-height: 1.6;
+}
+
+.sustainability-initiatives {
+  display: flex;
+  flex-direction: column;
+  gap: 25rpx;
+}
+
+.initiative-item {
+  display: flex;
+  align-items: center;
+  gap: 25rpx;
+  padding: 25rpx;
+  background: rgba(76, 175, 80, 0.05);
+  border-radius: 15rpx;
+  border: 1rpx solid rgba(76, 175, 80, 0.2);
+}
+
+.initiative-icon {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.initiative-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #4CAF50;
+  margin-bottom: 8rpx;
+}
+
+.initiative-description {
+  font-size: 24rpx;
+  color: #CCCCCC;
+  line-height: 1.4;
+}
+
+/* 品牌体验 */
+.brand-experience {
+  padding: 0 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.experience-card {
+  position: relative;
+  height: 300rpx;
+  border-radius: 25rpx;
+  overflow: hidden;
+  padding: 0;
+}
+
+.experience-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(212,175,55,0.3));
+}
+
+.experience-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.experience-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-bottom: 15rpx;
+  letter-spacing: 2rpx;
+}
+
+.experience-subtitle {
+  font-size: 26rpx;
+  color: #D4AF37;
+  margin-bottom: 30rpx;
+}
+
+.experience-btn {
+  padding: 20rpx 50rpx;
+  font-size: 28rpx;
+  border-radius: 50rpx;
+}

@@ -1,0 +1,116 @@
+<!--pages/index/index.wxml-->
+<view class="page-container">
+  <!-- 顶部轮播图 -->
+  <swiper class="hero-swiper" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{5000}}" indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#D4AF37">
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <image class="hero-image" src="{{item.image}}" mode="aspectFill" />
+      <view class="hero-overlay">
+        <view class="hero-content fade-in">
+          <text class="hero-title">{{item.title}}</text>
+          <text class="hero-subtitle">{{item.subtitle}}</text>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <!-- 快速入口 -->
+  <view class="quick-entry margin-medium">
+    <view class="entry-title">
+      <text class="title">限量臻选</text>
+      <view class="divider"></view>
+    </view>
+    
+    <view class="entry-grid">
+      <view class="entry-item luxury-card" bindtap="goToReservation">
+        <image class="entry-icon" src="/images/reservation-icon.png" />
+        <text class="entry-text">限量预订</text>
+        <text class="entry-desc">独家抢购通道</text>
+      </view>
+      
+      <view class="entry-item luxury-card" bindtap="goToProducts">
+        <image class="entry-icon" src="/images/products-icon.png" />
+        <text class="entry-text">精品系列</text>
+        <text class="entry-desc">奢华典藏</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 限量产品展示 -->
+  <view class="products-section margin-medium">
+    <view class="section-header flex-between">
+      <text class="subtitle">限量发售</text>
+      <text class="view-more accent-text" bindtap="goToProducts">查看全部</text>
+    </view>
+    
+    <scroll-view class="products-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view class="products-list">
+        <view class="product-card slide-up" wx:for="{{limitedProducts}}" wx:key="id" bindtap="goToProductDetail" data-product="{{item}}">
+          <view class="product-image-container">
+            <image class="product-image" src="{{item.image}}" mode="aspectFill" />
+            <view class="stock-badge" wx:if="{{item.stock <= 10}}">
+              <text class="stock-text">仅剩{{item.stock}}件</text>
+            </view>
+          </view>
+          
+          <view class="product-info">
+            <text class="product-name">{{item.name}}</text>
+            <text class="product-description muted-text">{{item.description}}</text>
+            <view class="product-price-row flex-between">
+              <text class="price">¥{{item.price}}</text>
+              <view class="reserve-btn btn-secondary" catchtap="quickReserve" data-product="{{item}}">
+                立即预订
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 品牌特色 -->
+  <view class="brand-features margin-medium">
+    <text class="subtitle">品牌承诺</text>
+    <view class="features-grid">
+      <view class="feature-item fade-in" wx:for="{{features}}" wx:key="id">
+        <image class="feature-icon" src="{{item.icon}}" />
+        <text class="feature-title">{{item.title}}</text>
+        <text class="feature-desc muted-text">{{item.description}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- VIP专享入口 -->
+  <view class="vip-section luxury-card margin-medium" wx:if="{{!isVIP}}">
+    <view class="vip-content">
+      <image class="vip-icon" src="/images/vip-crown.png" />
+      <text class="vip-title">成为VIP会员</text>
+      <text class="vip-desc">享受专属购买权限与尊贵服务</text>
+      <button class="btn-primary vip-btn" bindtap="applyVIP">申请VIP</button>
+    </view>
+  </view>
+
+  <!-- VIP专享区域 -->
+  <view class="vip-exclusive margin-medium" wx:if="{{isVIP}}">
+    <view class="vip-header flex-between">
+      <text class="subtitle accent-text">VIP专享</text>
+      <image class="vip-badge" src="/images/vip-badge.png" />
+    </view>
+    
+    <view class="exclusive-products">
+      <view class="exclusive-item luxury-card" wx:for="{{exclusiveProducts}}" wx:key="id" bindtap="goToProductDetail" data-product="{{item}}">
+        <image class="exclusive-image" src="{{item.image}}" mode="aspectFill" />
+        <view class="exclusive-info">
+          <text class="exclusive-name">{{item.name}}</text>
+          <text class="exclusive-price price">¥{{item.price}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 浮动预订按钮 -->
+  <view class="floating-reserve" wx:if="{{showFloatingBtn}}">
+    <button class="floating-btn btn-primary" bindtap="goToReservation">
+      限量预订
+    </button>
+  </view>
+</view>

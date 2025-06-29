@@ -1,0 +1,176 @@
+<!--pages/brand-story/brand-story.wxml-->
+<view class="page-container">
+  <!-- 品牌视频 -->
+  <view class="brand-video-section">
+    <video class="brand-video" 
+           src="{{brandVideo.url}}" 
+           poster="{{brandVideo.poster}}"
+           autoplay="{{false}}"
+           show-center-play-btn="{{true}}"
+           show-fullscreen-btn="{{true}}"
+           controls="{{true}}">
+    </video>
+    <view class="video-overlay">
+      <text class="video-title">DIOR 传奇故事</text>
+      <text class="video-subtitle">自1946年，永恒优雅</text>
+    </view>
+  </view>
+
+  <!-- 品牌历程 -->
+  <view class="brand-timeline luxury-card margin-medium">
+    <text class="section-title">品牌历程</text>
+    
+    <view class="timeline-container">
+      <view class="timeline-item fade-in" wx:for="{{timeline}}" wx:key="year">
+        <view class="timeline-marker">
+          <view class="timeline-dot"></view>
+          <view class="timeline-line" wx:if="{{index < timeline.length - 1}}"></view>
+        </view>
+        
+        <view class="timeline-content">
+          <text class="timeline-year accent-text">{{item.year}}</text>
+          <text class="timeline-title">{{item.title}}</text>
+          <text class="timeline-description">{{item.description}}</text>
+          <image class="timeline-image" src="{{item.image}}" mode="widthFix" wx:if="{{item.image}}" />
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 品牌精神 -->
+  <view class="brand-spirit luxury-card margin-medium">
+    <text class="section-title">品牌精神</text>
+    
+    <view class="spirit-grid">
+      <view class="spirit-item slide-up" wx:for="{{brandSpirit}}" wx:key="title">
+        <image class="spirit-icon" src="{{item.icon}}" />
+        <text class="spirit-title">{{item.title}}</text>
+        <text class="spirit-description">{{item.description}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 标志性产品 -->
+  <view class="iconic-products luxury-card margin-medium">
+    <text class="section-title">标志性产品</text>
+    
+    <scroll-view class="products-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view class="products-list">
+        <view class="product-item" wx:for="{{iconicProducts}}" wx:key="id" bindtap="viewProduct" data-product="{{item}}">
+          <image class="product-image" src="{{item.image}}" mode="aspectFill" />
+          <view class="product-overlay">
+            <text class="product-name">{{item.name}}</text>
+            <text class="product-year">{{item.year}}</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 工艺传承 -->
+  <view class="craftsmanship luxury-card margin-medium">
+    <text class="section-title">工艺传承</text>
+    
+    <view class="craft-content">
+      <image class="craft-hero-image" src="/images/dior-craftsmanship.jpg" mode="widthFix" />
+      
+      <text class="craft-description">
+        在DIOR的工坊中，每一件作品都承载着法式高级定制的精髓。我们的工匠们传承着数十年的精湛技艺，将传统手工艺与现代创新完美融合，创造出独一无二的奢华体验。
+      </text>
+      
+      <view class="craft-highlights">
+        <view class="highlight-item" wx:for="{{craftsmanshipHighlights}}" wx:key="title">
+          <image class="highlight-icon" src="{{item.icon}}" />
+          <view class="highlight-content">
+            <text class="highlight-title">{{item.title}}</text>
+            <text class="highlight-description">{{item.description}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 设计师故事 -->
+  <view class="designer-story luxury-card margin-medium">
+    <text class="section-title">设计师故事</text>
+    
+    <view class="designer-list">
+      <view class="designer-item" wx:for="{{designers}}" wx:key="name">
+        <image class="designer-avatar" src="{{item.avatar}}" mode="aspectFill" />
+        <view class="designer-info">
+          <text class="designer-name">{{item.name}}</text>
+          <text class="designer-period muted-text">{{item.period}}</text>
+          <text class="designer-achievement">{{item.achievement}}</text>
+          <text class="designer-quote">"{{item.quote}}"</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 品牌数据 -->
+  <view class="brand-statistics luxury-card margin-medium">
+    <text class="section-title">品牌成就</text>
+    
+    <view class="stats-grid">
+      <view class="stat-item" wx:for="{{brandStats}}" wx:key="label">
+        <text class="stat-number accent-text">{{item.number}}</text>
+        <text class="stat-label">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 全球影响力 -->
+  <view class="global-impact luxury-card margin-medium">
+    <text class="section-title">全球影响力</text>
+    
+    <view class="impact-content">
+      <image class="world-map" src="/images/dior-global-map.jpg" mode="widthFix" />
+      
+      <view class="impact-description">
+        <text class="impact-text">
+          DIOR在全球{{globalPresence.countries}}个国家设有精品店，为世界各地的客户提供卓越的奢华体验。从巴黎的香榭丽舍大街到东京的银座，从纽约的第五大道到上海的淮海中路，DIOR始终坚持着最高的品质标准。
+        </text>
+      </view>
+      
+      <view class="presence-stats">
+        <view class="presence-item" wx:for="{{globalPresence.stats}}" wx:key="label">
+          <text class="presence-number">{{item.number}}</text>
+          <text class="presence-label">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 可持续发展 -->
+  <view class="sustainability luxury-card margin-medium">
+    <text class="section-title">可持续发展</text>
+    
+    <view class="sustainability-content">
+      <view class="sustainability-intro">
+        <text class="sustainability-text">
+          DIOR致力于可持续发展，我们相信奢华与责任可以完美结合。通过创新的环保材料、负责任的采购和循环经济实践，我们为下一代创造更美好的世界。
+        </text>
+      </view>
+      
+      <view class="sustainability-initiatives">
+        <view class="initiative-item" wx:for="{{sustainabilityInitiatives}}" wx:key="title">
+          <image class="initiative-icon" src="{{item.icon}}" />
+          <text class="initiative-title">{{item.title}}</text>
+          <text class="initiative-description">{{item.description}}</text>
+        </view>
+      </view>
+    </div>
+  </view>
+
+  <!-- 品牌体验入口 -->
+  <view class="brand-experience margin-medium">
+    <view class="experience-card luxury-card" bindtap="exploreProducts">
+      <view class="experience-content">
+        <text class="experience-title">探索DIOR世界</text>
+        <text class="experience-subtitle">发现更多奢华臻品</text>
+        <button class="experience-btn btn-primary">立即探索</button>
+      </view>
+      <image class="experience-bg" src="/images/dior-experience-bg.jpg" mode="aspectFill" />
+    </view>
+  </view>
+</view>

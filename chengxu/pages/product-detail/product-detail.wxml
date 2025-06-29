@@ -1,0 +1,148 @@
+<!--pages/product-detail/product-detail.wxml-->
+<view class="page-container">
+  <!-- 产品图片展示 -->
+  <view class="product-gallery">
+    <swiper class="gallery-swiper" indicator-dots="{{true}}" indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#D4AF37">
+      <swiper-item wx:for="{{product.images}}" wx:key="*this">
+        <image class="gallery-image" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-url="{{item}}" />
+      </swiper-item>
+    </swiper>
+    
+    <!-- 库存状态标识 -->
+    <view class="stock-status {{product.stock > 0 ? 'in-stock' : 'out-stock'}}">
+      <text class="stock-text">{{product.stock > 0 ? '现货供应' : '暂时缺货'}}</text>
+    </view>
+  </view>
+
+  <!-- 产品基本信息 -->
+  <view class="product-info luxury-card margin-medium">
+    <view class="product-header">
+      <text class="product-title">{{product.name}}</text>
+      <view class="product-price-section">
+        <text class="current-price price">¥{{product.price}}</text>
+        <text class="original-price" wx:if="{{product.originalPrice}}">¥{{product.originalPrice}}</text>
+      </view>
+    </view>
+    
+    <view class="product-tags">
+      <view class="tag" wx:for="{{product.tags}}" wx:key="*this">{{item}}</view>
+    </view>
+    
+    <view class="product-description">
+      <text class="description-text">{{product.description}}</text>
+    </view>
+    
+    <!-- 库存信息 -->
+    <view class="stock-info flex-between">
+      <text class="stock-label">限量库存</text>
+      <view class="stock-bar">
+        <view class="stock-progress" style="width: {{(product.stock / product.totalStock) * 100}}%"></view>
+      </view>
+      <text class="stock-count">{{product.stock}}/{{product.totalStock}}</text>
+    </view>
+  </view>
+
+  <!-- 产品详细规格 -->
+  <view class="product-specs luxury-card margin-medium">
+    <text class="section-title">产品规格</text>
+    <view class="specs-list">
+      <view class="spec-item" wx:for="{{product.specifications}}" wx:key="name">
+        <text class="spec-name">{{item.name}}</text>
+        <text class="spec-value">{{item.value}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 产品故事 -->
+  <view class="product-story luxury-card margin-medium" wx:if="{{product.story}}">
+    <text class="section-title">设计故事</text>
+    <view class="story-content">
+      <image class="story-image" src="{{product.story.image}}" mode="widthFix" />
+      <text class="story-text">{{product.story.content}}</text>
+    </view>
+  </view>
+
+  <!-- 选择规格 -->
+  <view class="product-options luxury-card margin-medium" wx:if="{{product.options}}">
+    <text class="section-title">选择规格</text>
+    <view class="options-list">
+      <view class="option-group" wx:for="{{product.options}}" wx:key="name" wx:for-item="option">
+        <text class="option-name">{{option.name}}</text>
+        <view class="option-values">
+          <view class="option-item {{selectedOptions[option.name] === item.value ? 'selected' : ''}}" 
+                wx:for="{{option.values}}" wx:key="value" wx:for-item="item"
+                bindtap="selectOption" data-name="{{option.name}}" data-value="{{item.value}}">
+            <text class="option-text">{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户评价 -->
+  <view class="product-reviews luxury-card margin-medium" wx:if="{{reviews.length > 0}}">
+    <view class="reviews-header flex-between">
+      <text class="section-title">用户评价</text>
+      <view class="rating-summary">
+        <text class="rating-score">{{averageRating}}</text>
+        <view class="rating-stars">
+          <view class="star {{index < averageRating ? 'filled' : ''}}" wx:for="{{5}}" wx:key="*this"></view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="reviews-list">
+      <view class="review-item" wx:for="{{reviews}}" wx:key="id">
+        <view class="review-header flex-between">
+          <view class="reviewer-info">
+            <image class="reviewer-avatar avatar" src="{{item.avatar}}" />
+            <text class="reviewer-name">{{item.username}}</text>
+          </view>
+          <view class="review-rating">
+            <view class="star {{starIndex < item.rating ? 'filled' : ''}}" 
+                  wx:for="{{5}}" wx:key="*this" wx:for-index="starIndex"></view>
+          </view>
+        </view>
+        <text class="review-content">{{item.content}}</text>
+        <text class="review-time muted-text">{{item.createTime}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 推荐产品 -->
+  <view class="recommended-products margin-medium" wx:if="{{recommendedProducts.length > 0}}">
+    <text class="section-title">为您推荐</text>
+    <scroll-view class="recommended-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view class="recommended-list">
+        <view class="recommended-item" wx:for="{{recommendedProducts}}" wx:key="id" 
+              bindtap="goToProduct" data-id="{{item.id}}">
+          <image class="recommended-image" src="{{item.image}}" mode="aspectFill" />
+          <text class="recommended-name">{{item.name}}</text>
+          <text class="recommended-price price">¥{{item.price}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-actions">
+    <view class="action-buttons">
+      <button class="action-btn favorite-btn {{isFavorite ? 'favorited' : ''}}" 
+              bindtap="toggleFavorite">
+        <image class="btn-icon" src="/images/{{isFavorite ? 'heart-filled' : 'heart'}}.png" />
+        <text class="btn-text">{{isFavorite ? '已收藏' : '收藏'}}</text>
+      </button>
+      
+      <button class="action-btn share-btn" open-type="share">
+        <image class="btn-icon" src="/images/share.png" />
+        <text class="btn-text">分享</text>
+      </button>
+      
+      <button class="action-btn reserve-btn btn-primary" 
+              bindtap="goToReservation" 
+              disabled="{{product.stock <= 0}}">
+        <text class="reserve-text">{{product.stock > 0 ? '立即预订' : '暂时缺货'}}</text>
+      </button>
+    </view>
+  </view>
+</view>

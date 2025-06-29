@@ -1,0 +1,235 @@
+<!--pages/reservation/reservation.wxml-->
+<view class="page-container">
+  <!-- 预订进度条 -->
+  <view class="progress-bar margin-medium">
+    <view class="progress-steps">
+      <view class="step {{currentStep >= 1 ? 'active' : ''}}">
+        <view class="step-circle">1</view>
+        <text class="step-text">确认商品</text>
+      </view>
+      <view class="step-line {{currentStep >= 2 ? 'active' : ''}}"></view>
+      <view class="step {{currentStep >= 2 ? 'active' : ''}}">
+        <view class="step-circle">2</view>
+        <text class="step-text">填写信息</text>
+      </view>
+      <view class="step-line {{currentStep >= 3 ? 'active' : ''}}"></view>
+      <view class="step {{currentStep >= 3 ? 'active' : ''}}">
+        <view class="step-circle">3</view>
+        <text class="step-text">确认预订</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 步骤1: 确认商品 -->
+  <view class="step-content step-1" wx:if="{{currentStep === 1}}">
+    <view class="product-confirmation luxury-card margin-medium">
+      <text class="section-title">确认预订商品</text>
+      
+      <view class="product-summary">
+        <image class="product-image" src="{{selectedProduct.image}}" mode="aspectFill" />
+        <view class="product-details">
+          <text class="product-name">{{selectedProduct.name}}</text>
+          <text class="product-price price">¥{{selectedProduct.price}}</text>
+          
+          <!-- 选择的规格 -->
+          <view class="selected-options" wx:if="{{selectedProduct.selectedOptions}}">
+            <view class="option-item" wx:for="{{selectedOptionsArray}}" wx:key="name">
+              <text class="option-label">{{item.name}}:</text>
+              <text class="option-value">{{item.value}}</text>
+            </view>
+          </view>
+          
+          <!-- 库存提醒 -->
+          <view class="stock-warning" wx:if="{{selectedProduct.stock <= 10}}">
+            <text class="warning-text">⚠️ 仅剩{{selectedProduct.stock}}件，请尽快预订</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 数量选择 -->
+      <view class="quantity-selector">
+        <text class="selector-label">预订数量</text>
+        <view class="quantity-controls">
+          <button class="quantity-btn" bindtap="decreaseQuantity" disabled="{{quantity <= 1}}">-</button>
+          <text class="quantity-display">{{quantity}}</text>
+          <button class="quantity-btn" bindtap="increaseQuantity" disabled="{{quantity >= selectedProduct.stock}}">+</button>
+        </view>
+        <text class="quantity-note muted-text">最多可预订{{selectedProduct.stock}}件</text>
+      </view>
+      
+      <!-- 预订说明 -->
+      <view class="reservation-notice">
+        <text class="notice-title">预订须知</text>
+        <view class="notice-content">
+          <text class="notice-item">• 预订成功后，商品将为您保留48小时</text>
+          <text class="notice-item">• 请在保留期内完成支付，否则预订将自动取消</text>
+          <text class="notice-item">• 限量商品不支持退换，请确认后再预订</text>
+          <text class="notice-item">• VIP会员享有优先购买权</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="step-actions">
+      <button class="btn-primary step-btn" bindtap="nextStep">下一步</button>
+    </view>
+  </view>
+
+  <!-- 步骤2: 填写信息 -->
+  <view class="step-content step-2" wx:if="{{currentStep === 2}}">
+    <view class="user-info-form luxury-card margin-medium">
+      <text class="section-title">填写预订信息</text>
+      
+      <form bindsubmit="submitForm">
+        <!-- 个人信息 -->
+        <view class="form-section">
+          <text class="form-section-title">个人信息</text>
+          
+          <view class="form-item">
+            <text class="form-label">姓名 *</text>
+            <input class="form-input" name="name" placeholder="请输入真实姓名" 
+                   value="{{formData.name}}" bindinput="onInputChange" data-field="name" />
+          </view>
+          
+          <view class="form-item">
+            <text class="form-label">手机号 *</text>
+            <input class="form-input" name="phone" type="number" placeholder="请输入手机号" 
+                   value="{{formData.phone}}" bindinput="onInputChange" data-field="phone" />
+          </view>
+          
+          <view class="form-item">
+            <text class="form-label">身份证号 *</text>
+            <input class="form-input" name="idCard" placeholder="用于身份验证" 
+                   value="{{formData.idCard}}" bindinput="onInputChange" data-field="idCard" />
+          </view>
+        </view>
+        
+        <!-- 收货地址 -->
+        <view class="form-section">
+          <text class="form-section-title">收货地址</text>
+          
+          <view class="form-item">
+            <text class="form-label">地址 *</text>
+            <textarea class="form-textarea" name="address" placeholder="请输入详细收货地址" 
+                     value="{{formData.address}}" bindinput="onInputChange" data-field="address"></textarea>
+          </view>
+        </view>
+        
+        <!-- VIP信息验证 -->
+        <view class="form-section" wx:if="{{!isVIP}}">
+          <text class="form-section-title">VIP验证</text>
+          <view class="vip-upgrade">
+            <text class="vip-notice">成为VIP会员可享受优先预订权限</text>
+            <button class="btn-secondary vip-apply-btn" bindtap="applyVIP">申请VIP</button>
+          </view>
+        </view>
+      </form>
+    </view>
+    
+    <view class="step-actions">
+      <button class="btn-secondary step-btn" bindtap="prevStep">上一步</button>
+      <button class="btn-primary step-btn" bindtap="nextStep" disabled="{{!isFormValid}}">下一步</button>
+    </view>
+  </view>
+
+  <!-- 步骤3: 确认预订 -->
+  <view class="step-content step-3" wx:if="{{currentStep === 3}}">
+    <view class="order-summary luxury-card margin-medium">
+      <text class="section-title">预订确认</text>
+      
+      <!-- 商品信息确认 -->
+      <view class="summary-section">
+        <text class="summary-title">商品信息</text>
+        <view class="summary-item">
+          <text class="item-label">商品名称:</text>
+          <text class="item-value">{{selectedProduct.name}}</text>
+        </view>
+        <view class="summary-item">
+          <text class="item-label">单价:</text>
+          <text class="item-value price">¥{{selectedProduct.price}}</text>
+        </view>
+        <view class="summary-item">
+          <text class="item-label">数量:</text>
+          <text class="item-value">{{quantity}}件</text>
+        </view>
+        <view class="summary-item total-line">
+          <text class="item-label">小计:</text>
+          <text class="item-value total-price">¥{{totalAmount}}</text>
+        </view>
+      </view>
+      
+      <!-- 个人信息确认 -->
+      <view class="summary-section">
+        <text class="summary-title">预订信息</text>
+        <view class="summary-item">
+          <text class="item-label">姓名:</text>
+          <text class="item-value">{{formData.name}}</text>
+        </view>
+        <view class="summary-item">
+          <text class="item-label">手机号:</text>
+          <text class="item-value">{{formData.phone}}</text>
+        </view>
+        <view class="summary-item">
+          <text class="item-label">收货地址:</text>
+          <text class="item-value">{{formData.address}}</text>
+        </view>
+      </view>
+      
+      <!-- 预订协议 -->
+      <view class="agreement-section">
+        <label class="agreement-item">
+          <checkbox value="agree" checked="{{agreedToTerms}}" bindchange="onAgreementChange"/>
+          <text class="agreement-text">我已阅读并同意</text>
+          <text class="agreement-link" bindtap="showTerms">《预订协议》</text>
+        </label>
+      </view>
+    </view>
+    
+    <!-- 倒计时 -->
+    <view class="countdown-timer luxury-card margin-medium" wx:if="{{showCountdown}}">
+      <text class="countdown-title">限时预订</text>
+      <view class="countdown-display">
+        <text class="countdown-text">剩余时间: {{countdownText}}</text>
+      </view>
+      <text class="countdown-notice">超时未确认将自动释放库存</text>
+    </view>
+    
+    <view class="step-actions">
+      <button class="btn-secondary step-btn" bindtap="prevStep">上一步</button>
+      <button class="btn-primary step-btn confirm-btn" 
+              bindtap="confirmReservation" 
+              disabled="{{!agreedToTerms}}"
+              loading="{{submitting}}">
+        {{submitting ? '预订中...' : '确认预订'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 预订成功页面 -->
+  <view class="success-page" wx:if="{{currentStep === 4}}">
+    <view class="success-content">
+      <image class="success-icon" src="/images/success-icon.png" />
+      <text class="success-title">预订成功！</text>
+      <text class="success-message">您的预订已提交，我们将尽快为您处理</text>
+      
+      <view class="order-info luxury-card">
+        <text class="order-title">预订单号</text>
+        <text class="order-number">{{orderNumber}}</text>
+        <text class="order-notice">请保存预订单号，用于后续查询</text>
+      </view>
+      
+      <view class="next-steps">
+        <text class="steps-title">后续步骤</text>
+        <view class="step-list">
+          <text class="step-item">1. 我们将在24小时内联系您确认</text>
+          <text class="step-item">2. 确认后请在48小时内完成支付</text>
+          <text class="step-item">3. 支付成功后3-5个工作日发货</text>
+        </view>
+      </view>
+      
+      <view class="action-buttons">
+        <button class="btn-secondary" bindtap="goToProfile">查看订单</button>
+        <button class="btn-primary" bindtap="goToPayment">立即支付</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,185 @@
+<!--pages/payment/payment.wxml-->
+<view class="page-container">
+  <!-- 订单信息 -->
+  <view class="order-info luxury-card margin-medium">
+    <text class="section-title">订单信息</text>
+    
+    <view class="order-header">
+      <text class="order-number">订单号: {{orderInfo.orderNumber}}</text>
+      <text class="order-time">{{orderInfo.createTime}}</text>
+    </view>
+    
+    <view class="product-info">
+      <image class="product-image" src="{{orderInfo.product.image}}" mode="aspectFill" />
+      <view class="product-details">
+        <text class="product-name">{{orderInfo.product.name}}</text>
+        <text class="product-specs muted-text">{{orderInfo.specsText}}</text>
+        <view class="quantity-price">
+          <text class="quantity">数量: {{orderInfo.quantity}}</text>
+          <text class="unit-price">单价: ¥{{orderInfo.product.price}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="divider"></view>
+    
+    <view class="amount-summary">
+      <view class="amount-item">
+        <text class="amount-label">商品总价</text>
+        <text class="amount-value">¥{{orderInfo.totalAmount}}</text>
+      </view>
+      <view class="amount-item">
+        <text class="amount-label">配送费</text>
+        <text class="amount-value">{{orderInfo.deliveryFee > 0 ? '¥' + orderInfo.deliveryFee : '免费'}}</text>
+      </view>
+      <view class="amount-item total-amount">
+        <text class="amount-label">实付款</text>
+        <text class="amount-value price">¥{{orderInfo.finalAmount}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 收货信息 -->
+  <view class="delivery-info luxury-card margin-medium">
+    <text class="section-title">收货信息</text>
+    
+    <view class="address-info">
+      <view class="address-header">
+        <text class="recipient-name">{{orderInfo.userInfo.name}}</text>
+        <text class="recipient-phone">{{orderInfo.userInfo.phone}}</text>
+      </view>
+      <text class="recipient-address">{{orderInfo.userInfo.address}}</text>
+    </view>
+    
+    <view class="delivery-options">
+      <text class="options-title">配送方式</text>
+      <view class="option-list">
+        <label class="option-item" wx:for="{{deliveryOptions}}" wx:key="id">
+          <radio value="{{item.id}}" checked="{{selectedDelivery === item.id}}" bindchange="onDeliveryChange" />
+          <view class="option-content">
+            <text class="option-name">{{item.name}}</text>
+            <text class="option-desc muted-text">{{item.description}}</text>
+            <text class="option-fee">{{item.fee > 0 ? '¥' + item.fee : '免费'}}</text>
+          </view>
+        </label>
+      </view>
+    </view>
+  </view>
+
+  <!-- 支付方式 -->
+  <view class="payment-methods luxury-card margin-medium">
+    <text class="section-title">支付方式</text>
+    
+    <view class="method-list">
+      <label class="method-item" wx:for="{{paymentMethods}}" wx:key="id">
+        <radio value="{{item.id}}" checked="{{selectedPayment === item.id}}" bindchange="onPaymentChange" />
+        <image class="method-icon" src="{{item.icon}}" />
+        <view class="method-content">
+          <text class="method-name">{{item.name}}</text>
+          <text class="method-desc muted-text">{{item.description}}</text>
+          <text class="method-discount accent-text" wx:if="{{item.discount}}">{{item.discount}}</text>
+        </view>
+        <text class="method-status" wx:if="{{item.isRecommended}}">推荐</text>
+      </label>
+    </view>
+  </view>
+
+  <!-- 优惠券 -->
+  <view class="coupons-section luxury-card margin-medium" wx:if="{{availableCoupons.length > 0}}">
+    <text class="section-title">优惠券</text>
+    
+    <view class="coupon-selector" bindtap="showCouponModal">
+      <text class="coupon-text">{{selectedCoupon ? selectedCoupon.name : '选择优惠券'}}</text>
+      <text class="coupon-save accent-text" wx:if="{{selectedCoupon}}">-¥{{selectedCoupon.amount}}</text>
+      <text class="coupon-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 发票信息 -->
+  <view class="invoice-section luxury-card margin-medium">
+    <view class="invoice-header" bindtap="toggleInvoice">
+      <text class="section-title">发票信息</text>
+      <switch checked="{{needInvoice}}" bindchange="onInvoiceToggle" />
+    </view>
+    
+    <view class="invoice-form" wx:if="{{needInvoice}}">
+      <view class="form-item">
+        <text class="form-label">发票类型</text>
+        <picker bindchange="onInvoiceTypeChange" value="{{invoiceTypeIndex}}" range="{{invoiceTypes}}">
+          <view class="picker-display">{{invoiceTypes[invoiceTypeIndex]}}</view>
+        </picker>
+      </view>
+      
+      <view class="form-item" wx:if="{{invoiceTypeIndex === 1}}">
+        <text class="form-label">公司名称</text>
+        <input class="form-input" placeholder="请输入公司名称" value="{{companyName}}" bindinput="onCompanyNameInput" />
+      </view>
+      
+      <view class="form-item" wx:if="{{invoiceTypeIndex === 1}}">
+        <text class="form-label">税号</text>
+        <input class="form-input" placeholder="请输入税号" value="{{taxNumber}}" bindinput="onTaxNumberInput" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 安全提示 -->
+  <view class="security-notice margin-medium">
+    <view class="notice-content">
+      <image class="security-icon" src="/images/security-icon.png" />
+      <text class="notice-text">支付安全由微信保障，请放心支付</text>
+    </view>
+  </view>
+
+  <!-- 底部支付按钮 -->
+  <view class="payment-bottom">
+    <view class="payment-summary">
+      <view class="summary-left">
+        <text class="total-label">合计:</text>
+        <text class="total-amount price">¥{{finalPayAmount}}</text>
+      </view>
+      <button class="pay-button btn-primary" 
+              bindtap="submitPayment" 
+              disabled="{{paying}}"
+              loading="{{paying}}">
+        {{paying ? '支付中...' : '立即支付'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 优惠券选择弹窗 -->
+  <view class="coupon-modal" wx:if="{{showCouponModal}}">
+    <view class="modal-mask" bindtap="hideCouponModal"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">选择优惠券</text>
+        <text class="modal-close" bindtap="hideCouponModal">×</text>
+      </view>
+      
+      <view class="coupon-list">
+        <view class="coupon-item {{selectedCoupon && selectedCoupon.id === item.id ? 'selected' : ''}}" 
+              wx:for="{{availableCoupons}}" wx:key="id"
+              bindtap="selectCoupon" data-coupon="{{item}}">
+          <view class="coupon-info">
+            <text class="coupon-amount">¥{{item.amount}}</text>
+            <view class="coupon-details">
+              <text class="coupon-name">{{item.name}}</text>
+              <text class="coupon-condition muted-text">{{item.condition}}</text>
+              <text class="coupon-expiry muted-text">有效期至: {{item.expiry}}</text>
+            </view>
+          </view>
+          <view class="coupon-status" wx:if="{{selectedCoupon && selectedCoupon.id === item.id}}">已选择</view>
+        </view>
+        
+        <view class="coupon-item" bindtap="selectCoupon" data-coupon="{{null}}">
+          <view class="coupon-info">
+            <text class="coupon-amount">不使用</text>
+            <view class="coupon-details">
+              <text class="coupon-name">不使用优惠券</text>
+            </view>
+          </view>
+          <view class="coupon-status" wx:if="{{!selectedCoupon}}">已选择</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
